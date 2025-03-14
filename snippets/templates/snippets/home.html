@@ -1,0 +1,49 @@
+{% extends 'snippets/base.html' %}
+
+{% block title %}Code Snippets - Home{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Recent Code Snippets</h1>
+</div>
+
+<div class="snippet-list">
+    {% for snippet in snippets %}
+    <div class="snippet-card">
+        <h2 class="snippet-title">{{ snippet.title }}</h2>
+        <pre><code class="language-{{ snippet.language }}">{{ snippet.code|truncatechars:150 }}</code></pre>
+        <div class="snippet-meta">
+            <span>Language: {{ snippet.language }}</span>
+            <br>
+            <span>Expires: {{ snippet.expiry_date|timeuntil }}</span>
+        </div>
+        <div style="margin-top: 1rem;">
+            <a href="{% url 'snippet_detail' snippet.id %}" class="btn">View Details</a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="card">
+        <p>No snippets available. Create one!</p>
+        <a href="{% url 'create_snippet' %}" class="btn" style="margin-top: 1rem;">Create Snippet</a>
+    </div>
+    {% endfor %}
+</div>
+
+{% if is_paginated %}
+<div style="margin-top: 2rem; text-align: center;">
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn">&laquo; Previous</a>
+        {% endif %}
+        
+        <span style="margin: 0 1rem; color: var(--text-gray);">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn">Next &raquo;</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %} 

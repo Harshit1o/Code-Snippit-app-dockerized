@@ -17,7 +17,7 @@ A Django-based web application that allows users to share code snippets with aut
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/code-expiry.git
+git clone git@github.com:Harshit1o/Code-Snippit-app-dockerized.git
 cd code-expiry
 ```
 
